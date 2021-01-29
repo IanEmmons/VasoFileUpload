@@ -2,9 +2,12 @@ package org.virginiaso.file_upload;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
 import org.virginiaso.file_upload.util.HostNameUtil;
 import org.virginiaso.file_upload.util.ValidationException;
 
@@ -24,6 +29,11 @@ public class FileUploadController {
 
 	private final FileUploadService fileUploadService;
 	private final String baseEventUrl;
+
+	@Autowired
+	//@Qualifier("commonsMultipartResolver")
+	@Qualifier("standardServletMultipartResolver")
+	private MultipartResolver resolver;
 
 	@Autowired
 	public FileUploadController(FileUploadService fileUploadService,
@@ -48,6 +58,24 @@ public class FileUploadController {
 		model.addAttribute("userSub", new UserSubmission());
 		model.addAttribute("errorMessage", null);
 		return eventTemplate;
+	}
+
+	@PostMapping("/fileUpload/{eventTemplate}")
+	public String fileUploadSubmit2(
+		@PathVariable("eventTemplate") String eventTemplate,
+		@ModelAttribute UserSubmission userSub,
+		HttpServletRequest request,
+		Model model) {
+
+		MultipartHttpServletRequest multipartRequest = null;
+		try {
+			multipartRequest = resolver.resolveMultipart(request);
+			MultipartFile multipartFile = multipartRequest.getFile("user-file");
+		} finally {
+			resolver.cleanupMultipart(multipartRequest);
+		}
+
+		return null;
 	}
 
 	@PostMapping("/fileUpload/{eventTemplate}")
