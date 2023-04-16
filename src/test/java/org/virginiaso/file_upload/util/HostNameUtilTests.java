@@ -10,6 +10,7 @@ public class HostNameUtilTests {
 	private static final boolean IS_WIN = OP_SYS.contains("win");
 	private static final boolean IS_MAC = OP_SYS.contains("mac");
 
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetHostName() {
 		String hostName = HostNameUtil.getHostName();
@@ -17,6 +18,7 @@ public class HostNameUtilTests {
 		assertNotEquals(null, hostName);
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetHostByInetAddress() {
 		String hostName = HostNameUtil.getHostByInetAddress();
@@ -24,6 +26,7 @@ public class HostNameUtilTests {
 		assertNotEquals(null, hostName);
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetHostByEnvVar() {
 		String hostName = HostNameUtil.getHostByEnvVar(IS_WIN
@@ -37,6 +40,7 @@ public class HostNameUtilTests {
 		}
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetHostBySystemCommand() {
 		String hostName = HostNameUtil.getHostBySystemCommand();
@@ -44,6 +48,7 @@ public class HostNameUtilTests {
 		assertNotEquals(null, hostName);
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetHostByEtcHostname() {
 		String hostName = HostNameUtil.getHostByEtcHostname();

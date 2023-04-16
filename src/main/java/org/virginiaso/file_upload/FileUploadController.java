@@ -127,11 +127,13 @@ public class FileUploadController {
 		}
 	}
 
+	@SuppressWarnings("static-method")
 	@ExceptionHandler
 	public String handleIoEx(Model model, IOException ex) {
 		return handleException(model, ex);
 	}
 
+	@SuppressWarnings("static-method")
 	@ExceptionHandler
 	public String handleRuntimeEx(Model model, RuntimeException ex) {
 		return handleException(model, ex);

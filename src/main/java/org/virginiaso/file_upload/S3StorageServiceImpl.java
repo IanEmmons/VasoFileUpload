@@ -40,6 +40,7 @@ public class S3StorageServiceImpl implements StorageService {
 		submissionRoot = new S3Uri(submissionRootUri);
 	}
 
+	@SuppressWarnings("resource")
 	@PostConstruct
 	public void initialize() {
 		s3Client = S3Client.builder()

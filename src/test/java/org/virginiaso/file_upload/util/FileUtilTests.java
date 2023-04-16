@@ -7,6 +7,7 @@ import java.io.File;
 import org.junit.jupiter.api.Test;
 
 public class FileUtilTests {
+	@SuppressWarnings("static-method")
 	@Test
 	void testWithFileExt() {
 		File originalFile = new File("/foo/bar/baz.txt");
@@ -14,6 +15,7 @@ public class FileUtilTests {
 		assertEquals("/foo/bar/baz-temp.txt", fileWithSuffix.getPath());
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	void testWithNoFileExt() {
 		File originalFile = new File("/foo.bar/baz");
