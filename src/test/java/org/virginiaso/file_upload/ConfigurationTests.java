@@ -21,6 +21,7 @@ public class ConfigurationTests {
 		Configuration.setTimeZone("America/New_York");
 	}
 
+	@SuppressWarnings("static-method")
 	@ParameterizedTest
 	@MethodSource
 	public void convertTeamListTest(String inputStr, Set<Integer> expectedTeams) {
@@ -60,6 +61,7 @@ public class ConfigurationTests {
 			);
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	public void configurationTest() throws IOException {
 		List<Tournament> tournaments = Configuration.parse("testTournamentConfig.yaml");

@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class S3UriTest {
+	@SuppressWarnings("static-method")
 	@ParameterizedTest
 	@CsvSource({
 		"s3://bucket/root-key/hb*-research.xml,bucket,root-key/hb*-research.xml"
@@ -25,6 +26,7 @@ public class S3UriTest {
 		assertEquals(expectedReconstructedUri, uri.toString());
 	}
 
+	@SuppressWarnings("static-method")
 	@ParameterizedTest
 	@NullAndEmptySource
 	@ValueSource(strings = {

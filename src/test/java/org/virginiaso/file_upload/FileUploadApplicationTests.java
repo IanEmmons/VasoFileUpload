@@ -21,6 +21,7 @@ class FileUploadApplicationTests {
 	void contextLoads() {
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	void timeZoneFromUtcTest() {
 		Instant utcNow = Instant.now();
@@ -34,6 +35,7 @@ class FileUploadApplicationTests {
 			DateTimeFormatter.ISO_LOCAL_TIME.format(easternNow));
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	void timeZoneToUtcTest() {
 		ZoneId tz = ZoneId.of("America/New_York");
@@ -45,15 +47,17 @@ class FileUploadApplicationTests {
 			dateTimeToParse, DateTimeFormatter.ISO_INSTANT.format(instant));
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	void awsDetectorTest() {
 		System.out.format("AWS public host name: '%1$s'%n",
 			AwsDetector.getAwsPublicHostname());
 	}
 
+	@SuppressWarnings("static-method")
 	@Test
 	void awsS3Test() {
-		try (S3Client s3Client = S3Client.builder()
+		try (@SuppressWarnings("resource") S3Client s3Client = S3Client.builder()
 			.credentialsProvider(ProfileCredentialsProvider.create("iemmons-api"))
 			.region(Region.US_EAST_1)
 			.build()) {

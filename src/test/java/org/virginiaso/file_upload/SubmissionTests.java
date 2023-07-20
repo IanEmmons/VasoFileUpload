@@ -28,6 +28,7 @@ public class SubmissionTests {
 		Configuration.setTimeZone("America/New_York");
 	}
 
+	@SuppressWarnings("static-method")
 	@ParameterizedTest
 	@MethodSource("fieldValidationData")
 	public void fieldValidationTest(String eventUri, int id, Instant timeStamp,
@@ -201,6 +202,7 @@ public class SubmissionTests {
 		return userSub;
 	}
 
+	@SuppressWarnings("static-method")
 	@ParameterizedTest
 	@MethodSource("teamTimeValidationData")
 	public void teamTimeValidationTest(Submission submission, String errorRegex) {

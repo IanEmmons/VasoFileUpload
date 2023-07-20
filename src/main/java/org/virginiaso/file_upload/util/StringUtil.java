@@ -18,7 +18,7 @@ public final class StringUtil {
 	public static <E extends Enum<E>> E convertEnumerator(Class<E> enumClass, String str) {
 		Objects.requireNonNull(enumClass, "enumClass");
 		try {
-			return E.valueOf(enumClass, safeTrim(str));
+			return Enum.valueOf(enumClass, safeTrim(str));
 		} catch (NullPointerException | IllegalArgumentException ex) {
 			try {
 				var valuesMethod = enumClass.getMethod("values");
