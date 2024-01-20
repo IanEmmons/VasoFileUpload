@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.DuplicateHeaderMode;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +22,17 @@ import org.virginiaso.file_upload.util.FileUtil;
 import org.virginiaso.file_upload.util.StreamUtil;
 
 final class EventUploader {
-	public static final CSVFormat CSV_FORMAT_IN = CSVFormat.DEFAULT
-		.withFirstRecordAsHeader()
-		.withTrim()
-		.withAllowDuplicateHeaderNames(false);
-	public static final CSVFormat CSV_FORMAT_OUT = CSVFormat.DEFAULT
-		.withHeader(Column.class)
-		.withTrim()
-		.withAllowDuplicateHeaderNames(false);
+	public static final CSVFormat CSV_FORMAT_IN = CSVFormat.DEFAULT.builder()
+		.setHeader()
+		.setSkipHeaderRecord(true)
+		.setTrim(true)
+		.setDuplicateHeaderMode(DuplicateHeaderMode.DISALLOW)
+		.build();
+	public static final CSVFormat CSV_FORMAT_OUT = CSVFormat.DEFAULT.builder()
+		.setHeader(Column.class)
+		.setTrim(true)
+		.setDuplicateHeaderMode(DuplicateHeaderMode.DISALLOW)
+		.build();
 	private static final Logger LOG = LoggerFactory.getLogger(EventUploader.class);
 
 	private final Event event;
@@ -96,8 +100,8 @@ final class EventUploader {
 		return submission;
 	}
 
-	private Optional<String> saveUploadedFile(MultipartFile file, int id, String label, Event event,
-			Division division, int teamNumber) throws IOException {
+	private Optional<String> saveUploadedFile(MultipartFile file, int id, String label,
+			Event e, Division div, int teamNumber) throws IOException {
 		if (file.isEmpty()) {
 			return Optional.empty();
 		}
@@ -110,7 +114,7 @@ final class EventUploader {
 		Pair<String, String> originalStemExt = FileUtil.getStemExtPair(originalFileName);
 
 		var newFileName = String.format("%1$s%2$d-%3$s-%4$03d%5$s.%6$s",
-			division, teamNumber, originalStemExt.getLeft(), id, label,
+			div, teamNumber, originalStemExt.getLeft(), id, label,
 			originalStemExt.getRight());
 
 		storageService.transferUploadedFile(file, eventDirName, newFileName);

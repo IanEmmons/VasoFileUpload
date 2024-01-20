@@ -55,14 +55,10 @@ public enum Event {
 		this.uri = Objects.requireNonNull(uri, "uri");
 		this.label = Objects.requireNonNull(label, "label");
 		this.isNotesUpload = isNotesUpload;
-		divisions = stringToEnumSet(label, divLetters);
+		divisions = stringToEnumSet(label, Objects.requireNonNull(divLetters, "divLetters"));
 	}
 
 	private static EnumSet<Division> stringToEnumSet(String eventLbl, String divLetters) {
-		if (divLetters == null) {
-			LOG.error("{} has a null division specification", eventLbl);
-			System.exit(-1);
-		}
 		var result = EnumSet.noneOf(Division.class);
 		try {
 			for (var i = 0; i < divLetters.length(); ++i) {

@@ -18,6 +18,7 @@ import org.virginiaso.file_upload.yaml_dto.ConfigurationDto;
 import org.virginiaso.file_upload.yaml_dto.EventDto;
 import org.virginiaso.file_upload.yaml_dto.TimeIntervalDto;
 import org.virginiaso.file_upload.yaml_dto.TournamentDto;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -42,7 +43,7 @@ final class Configuration {
 	public static List<Tournament> parse(String tournamentConfigRsrc)
 			throws IOException {
 		try (var rdr = FileUtil.getResourceAsReader(tournamentConfigRsrc)) {
-			var yaml = new Yaml(new Constructor(ConfigurationDto.class));
+			var yaml = new Yaml(new Constructor(ConfigurationDto.class, new LoaderOptions()));
 			ConfigurationDto configurationDto = yaml.load(rdr);
 			return configurationDto.tournaments.stream()
 				.map(Configuration::convertTournament)
